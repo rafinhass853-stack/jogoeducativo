@@ -1,17 +1,7 @@
 export type Challenge={prompt:string;emoji:string;options:string[];answer:string;success:string};
 
-const forms=[
- (p:string)=>p,
- (p:string)=>`Vamos pensar: ${p}`,
- (p:string)=>`Desafio surpresa: ${p}`,
- (p:string)=>`Hora de aprender! ${p}`,
- (p:string)=>`Você consegue? ${p}`
-];
-
 function makeSeeds(seeds:ReadonlyArray<readonly [string,string,string[],string,string]>):Challenge[]{
- return seeds.flatMap(([prompt,emoji,options,answer,success])=>forms.map((f,i)=>({
-  prompt:i?f(prompt):prompt,emoji,options,answer,success
- })));
+ return seeds.map(([prompt,emoji,options,answer,success])=>({prompt,emoji,options,answer,success}));
 }
 
 const numbersSeeds:Array<[string,string,string[],string,string]>=Array.from({length:40},(_,i)=>{
@@ -47,16 +37,17 @@ const lettersSeeds=letterWords.map(([letter,word],i)=>{
 });
 
 const animals=[
- ["🐱 Gato","miau"],["🐶 Cachorro","late"],["🐮 Vaca","mugir"],["🦁 Leão","rugir"],["🐘 Elefante","tem tromba"],["🐸 Sapo","pula"],["🐟 Peixe","vive na água"],["🐦 Pássaro","voa"],["🐴 Cavalo","galopa"],["🐰 Coelho","tem orelhas compridas"],
-["🦒 Girafa","tem pescoço comprido"],["🐢 Tartaruga","tem casco"],["🐧 Pinguim","vive em regiões frias"],["🐝 Abelha","produz mel"],["🦋 Borboleta","tem asas"],["🐍 Cobra","rasteja"],["🐒 Macaco","gosta de subir em árvores"],["🐼 Panda","come bambu"],["🦓 Zebra","tem listras"],["🦒 Girafa","é muito alta"],
-["🐊 Crocodilo","vive perto da água"],["🦉 Coruja","é conhecida por seus grandes olhos"],["🐔 Galinha","bota ovos"],["🦆 Pato","nada"],["🐑 Ovelha","tem lã"],["🐐 Cabra","pode viver em lugares montanhosos"],["🐪 Camelo","vive bem no deserto"],["🦌 Cervo","tem chifres"],["🦔 Ouriço","tem espinhos"],["🐿️ Esquilo","guarda alimentos"],
-["🐙 Polvo","tem oito braços"],["🦀 Caranguejo","anda de lado"],["🐋 Baleia","é mamífero marinho"],["🐬 Golfinho","vive no mar"],["🦈 Tubarão","é um peixe"],["🦩 Flamingo","tem pernas longas"],["🦜 Papagaio","pode imitar sons"],["🐝 Abelha","vive em colmeias"],["🐞 Joaninha","é um inseto"],["🦗 Grilo","pode saltar"]
+ ["🐱 Gato","MIAU!"],["🐶 Cachorro","AU AU!"],["🐮 Vaca","MUUU!"],["🦁 Leão","ROOOAR!"],["🐸 Sapo","COAX!"],["🐴 Cavalo","IIIRRINCHÓ!"],["🦆 Pato","QUÁ QUÁ!"],["🐑 Ovelha","BÉÉÉ!"],["🐔 Galinha","COCÓRICÓ!"],["🐷 Porco","OINC OINC!"],
+ ["🐦 Pássaro","PIU PIU!"],["🐝 Abelha","ZUM ZUM!"],["🦗 Grilo","CRI CRI!"],["🦉 Coruja","UHU UHU!"],["🐺 Lobo","AÚÚÚ!"],["🦃 Peru","GLU GLU!"],["🐐 Cabra","BÉÉÉ!"],["🦜 Papagaio","imita sons"],["🐘 Elefante","faz um som forte com a tromba"],["🐵 Macaco","faz sons e gritos"],
+ ["🐱 Gato","MIAU!"],["🐶 Cachorro","AU AU!"],["🐮 Vaca","MUUU!"],["🦁 Leão","ROOOAR!"],["🐸 Sapo","COAX!"],["🐴 Cavalo","IIIRRINCHÓ!"],["🦆 Pato","QUÁ QUÁ!"],["🐔 Galinha","COCÓRICÓ!"],["🐦 Pássaro","PIU PIU!"],["🐝 Abelha","ZUM ZUM!"],
+ ["🦗 Grilo","CRI CRI!"],["🦉 Coruja","UHU UHU!"],["🐺 Lobo","AÚÚÚ!"],["🦃 Peru","GLU GLU!"],["🐐 Cabra","BÉÉÉ!"],["🦜 Papagaio","imita sons"],["🐘 Elefante","faz um som forte com a tromba"],["🐵 Macaco","faz sons e gritos"],["🐱 Gato","MIAU!"],["🐶 Cachorro","AU AU!"]
 ];
-const memorySeeds=animals.map(([animal,trait],i)=>{
- const other1=animals[(i+7)%animals.length][0],other2=animals[(i+13)%animals.length][0];
- return [`Qual animal combina com esta característica: ${trait}?`,"🧠",[animal,other1,other2],animal,`Acertou! ${animal} combina com essa característica.`] as [string,string,string[],string,string];
+const memorySeeds=animals.map(([animal,sound],i)=>{
+ const other1=animals[(i+1)%animals.length][0],other2=animals[(i+2)%animals.length][0];
+ const animalName=animal.replace(/^\S+\s/,"");
+ if(sound.endsWith("!")) return [`Qual animal faz "${sound}"?`,animal,[animal,other1,other2],animal,`Isso! O ${animalName} faz "${sound}".`] as [string,string,string[],string,string];
+ return [`Qual animal combina com esta pista: ${sound}?`,animal,[animal,other1,other2],animal,`Muito bem! A pista combina com ${animalName}.`] as [string,string,string[],string,string];
 });
-
 const science=[
  ["vermelha","🍎 Maçã","🍌 Banana","🥦 Brócolis"],["amarela","🍌 Banana","🍇 Uva","🥦 Brócolis"],["verde","🥦 Brócolis","🍎 Maçã","🍌 Banana"],["azul","🌊 Água do mar","🍎 Maçã","🍌 Banana"],
  ["três lados","🔺 Triângulo","⚪ Círculo","⬜ Quadrado"],["quatro lados","⬜ Quadrado","⚪ Círculo","🔺 Triângulo"],["redonda","⚪ Círculo","🔺 Triângulo","⬜ Quadrado"],["tem seis lados","⬡ Hexágono","⚪ Círculo","🔺 Triângulo"],
