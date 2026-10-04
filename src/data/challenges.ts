@@ -122,7 +122,17 @@ const bible=[
 ];
 const bibleSeeds=bible.map(([p,e,a,b,c])=>[p,e,[a,b,c],a,`Muito bem! Podemos aprender sobre isso na Bíblia: ${a}.`] as [string,string,string[],string,string]);
 
-const bibleBookSeeds=bibleBooks;
+const deuterocanonicalBooks:Array<[string,string,string[],string,string]>=([
+ ["Tobias","📖",["fé, família e cuidado com os necessitados","a construção do templo","as viagens de Paulo"],"fé, família e cuidado com os necessitados","Tobias destaca fé, família e cuidado com quem precisa."],
+ ["Judite","📖",["coragem e confiança em Deus","a criação","a vida de Pedro"],"coragem e confiança em Deus","Judite apresenta uma personagem marcada por coragem e confiança."],
+ ["Sabedoria","📖",["sabedoria, justiça e busca de Deus","a arca de Noé","o ministério de João Batista"],"sabedoria, justiça e busca de Deus","Sabedoria reflete sobre justiça e a busca da sabedoria."],
+ ["Eclesiástico","📖",["sabedoria prática, família e convivência","a queda de Jericó","as viagens de Paulo"],"sabedoria prática, família e convivência","Eclesiástico reúne ensinamentos práticos sobre sabedoria e convivência."],
+ ["Baruc","📖",["arrependimento, esperança e sabedoria","a construção da arca","o reinado de Salomão"],"arrependimento, esperança e sabedoria","Baruc apresenta orações, arrependimento e esperança."],
+ ["1 Macabeus","📖",["resistência e fidelidade do povo judeu","o nascimento de Jesus","as cartas de Paulo"],"resistência e fidelidade do povo judeu","1 Macabeus narra acontecimentos ligados à resistência judaica."],
+ ["2 Macabeus","📖",["fidelidade, coragem e esperança na ressurreição","a criação","a vida de Noé"],"fidelidade, coragem e esperança na ressurreição","2 Macabeus destaca fidelidade, coragem e esperança."]
+] as Array<[string,string,string[],string,string]>).map(([book,e,options,answer,success])=>[`Qual é um dos principais temas do livro de ${book}?`,e,options,answer,success]);
+
+const bibleBookSeeds=[...bibleBooks,...deuterocanonicalBooks];
 
 export const challenges:Record<string,Challenge[]> = {
  numeros:makeSeeds(numbersSeeds),
