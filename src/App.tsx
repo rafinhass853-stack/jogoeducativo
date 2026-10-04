@@ -16,12 +16,13 @@ export default function App(){
  const [showBibleMap,setShowBibleMap]=useState(false);
  const [bibleQuestions,setBibleQuestions]=useState<Challenge[]|undefined>();
  const [bibleUnlocked,setBibleUnlocked]=useState(()=>Number(localStorage.getItem("mundo-do-saber-bible-unlocked")||0));
+ const [bibleStageIndex,setBibleStageIndex]=useState(0);
  useEffect(()=>{localStorage.setItem(PROFILE_KEY,JSON.stringify(profile))},[profile]);
  const game=games.find(g=>g.id===activeGame);
  if(game)return <AdventureGame game={game} onBack={()=>setActiveGame(null)} onComplete={(stars,xp)=>setProfile(p=>{const totalXp=p.xp+xp;return {...p,stars:p.stars+stars,xp:totalXp,level:levelFromXp(totalXp),completedGames:p.completedGames.includes(game.id)?p.completedGames:[...p.completedGames,game.id]}})}/>;
  const nextLevel=xpForNextLevel(profile.level),progress=profile.xp%100,avatar=avatars.find(a=>a.id===profile.avatar)||avatars[0];
  function saveProfile(name:string,age:number,avatarId:AvatarId){setProfile(p=>({...p,name:name.trim()||defaultProfile.name,age,avatar:avatarId}));setEditing(false)}
- if(showBibleMap)return <main className="app-shell"><button className="back-button" onClick={()=>setShowBibleMap(false)}>← Voltar aos jogos</button><BibleMap unlocked={bibleUnlocked} onPlay={(questions)=>{setBibleQuestions(questions);setShowBibleMap(false);setActiveGame("biblia")}}/></main>;
+ if(showBibleMap)return <main className="app-shell"><button className="back-button" onClick={()=>setShowBibleMap(false)}>← Voltar aos jogos</button><BibleMap unlocked={bibleUnlocked} onPlay={(questions,stage)=>{setBibleQuestions(questions);setBibleStageIndex(stage);setShowBibleMap(false);setActiveGame("biblia")}}/></main>;
  return <main className="app-shell">
   <header className="hero"><div><span className="eyebrow">🌈 APRENDER BRINCANDO</span><h1>Mundo do Saber</h1><p>Jogos divertidos para aprender, pensar e crescer.</p></div><button className="profile-bubble" onClick={()=>setEditing(true)} aria-label="Editar perfil"><span className="avatar-large">{avatar.icon}</span><span>{profile.age} anos</span></button></header>
   <section className="profile-panel"><div className="profile-main"><div className="profile-avatar">{avatar.icon}</div><div><span className="section-kicker">OLÁ, APRENDIZ!</span><h2>{profile.name}</h2><p>Nível {profile.level} · {profile.xp} XP · {profile.stars} ⭐</p></div></div><div className="level-box"><div className="level-row"><strong>Próximo nível</strong><span>{profile.xp%100}/100 XP</span></div><div className="xp-track"><div style={{width:`${progress}%`}}/></div><small>Faltam {nextLevel-profile.xp} XP</small></div></section>
