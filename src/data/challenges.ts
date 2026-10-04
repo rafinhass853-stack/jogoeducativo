@@ -36,18 +36,48 @@ const lettersSeeds=letterWords.map(([letter,word],i)=>{
  return [`Qual é a primeira letra de “${word}”?`,"🔤",[letter,others[0],others[1]],letter,`Muito bem! ${word} começa com ${letter}.`] as [string,string,string[],string,string];
 });
 
-const animals=[
- ["🐱 Gato","MIAU!"],["🐶 Cachorro","AU AU!"],["🐮 Vaca","MUUU!"],["🦁 Leão","ROOOAR!"],["🐸 Sapo","COAX!"],["🐴 Cavalo","IIIRRINCHÓ!"],["🦆 Pato","QUÁ QUÁ!"],["🐑 Ovelha","BÉÉÉ!"],["🐔 Galinha","COCÓRICÓ!"],["🐷 Porco","OINC OINC!"],
- ["🐦 Pássaro","PIU PIU!"],["🐝 Abelha","ZUM ZUM!"],["🦗 Grilo","CRI CRI!"],["🦉 Coruja","UHU UHU!"],["🐺 Lobo","AÚÚÚ!"],["🦃 Peru","GLU GLU!"],["🐐 Cabra","BÉÉÉ!"],["🦜 Papagaio","imita sons"],["🐘 Elefante","faz um som forte com a tromba"],["🐵 Macaco","faz sons e gritos"],
- ["🐱 Gato","MIAU!"],["🐶 Cachorro","AU AU!"],["🐮 Vaca","MUUU!"],["🦁 Leão","ROOOAR!"],["🐸 Sapo","COAX!"],["🐴 Cavalo","IIIRRINCHÓ!"],["🦆 Pato","QUÁ QUÁ!"],["🐔 Galinha","COCÓRICÓ!"],["🐦 Pássaro","PIU PIU!"],["🐝 Abelha","ZUM ZUM!"],
- ["🦗 Grilo","CRI CRI!"],["🦉 Coruja","UHU UHU!"],["🐺 Lobo","AÚÚÚ!"],["🦃 Peru","GLU GLU!"],["🐐 Cabra","BÉÉÉ!"],["🦜 Papagaio","imita sons"],["🐘 Elefante","faz um som forte com a tromba"],["🐵 Macaco","faz sons e gritos"],["🐱 Gato","MIAU!"],["🐶 Cachorro","AU AU!"]
-];
-const memorySeeds=animals.map(([animal,sound],i)=>{
- const other1=animals[(i+1)%animals.length][0],other2=animals[(i+2)%animals.length][0];
- const animalName=animal.replace(/^\S+\s/,"");
- if(sound.endsWith("!")) return [`Qual animal faz "${sound}"?`,animal,[animal,other1,other2],animal,`Isso! O ${animalName} faz "${sound}".`] as [string,string,string[],string,string];
- return [`Qual animal combina com esta pista: ${sound}?`,animal,[animal,other1,other2],animal,`Muito bem! A pista combina com ${animalName}.`] as [string,string,string[],string,string];
-});
+const animalChallenges:Array<[string,string,string[],string,string]> = [
+ ["Qual animal faz \"MIAU!\"?","🐱",["🐱 Gato","🐶 Cachorro","🐮 Vaca"],"🐱 Gato","Acertou! O gato faz MIAU!"],
+ ["Qual animal faz \"AU AU!\"?","🐶",["🐶 Cachorro","🐱 Gato","🐔 Galinha"],"🐶 Cachorro","Isso! O cachorro faz AU AU!"],
+ ["Qual animal faz \"MUUU!\"?","🐮",["🐮 Vaca","🐑 Ovelha","🐷 Porco"],"🐮 Vaca","Muito bem! A vaca faz MUUU!"],
+ ["Qual animal faz \"ROOOAR!\"?","🦁",["🦁 Leão","🐴 Cavalo","🐰 Coelho"],"🦁 Leão","Isso! O leão faz ROOOAR!"],
+ ["Qual animal faz \"COAX!\"?","🐸",["🐸 Sapo","🐱 Gato","🐮 Vaca"],"🐸 Sapo","Acertou! O sapo faz COAX!"],
+ ["Qual animal faz \"IIIRRINCHÓ!\"?","🐴",["🐴 Cavalo","🐶 Cachorro","🐑 Ovelha"],"🐴 Cavalo","Muito bem! O cavalo relincha!"],
+ ["Qual animal faz \"QUÁ QUÁ!\"?","🦆",["🦆 Pato","🐔 Galinha","🐦 Pássaro"],"🦆 Pato","Isso! O pato faz QUÁ QUÁ!"],
+ ["Qual animal faz \"BÉÉÉ!\"?","🐑",["🐑 Ovelha","🐮 Vaca","🐴 Cavalo"],"🐑 Ovelha","Acertou! A ovelha faz BÉÉÉ!"],
+ ["Qual animal faz \"COCÓRICÓ!\"?","🐔",["🐔 Galinha","🦆 Pato","🐶 Cachorro"],"🐔 Galinha","Muito bem! A galinha faz COCÓRICÓ!"],
+ ["Qual animal faz \"OINC OINC!\"?","🐷",["🐷 Porco","🐮 Vaca","🐑 Ovelha"],"🐷 Porco","Isso! O porco faz OINC OINC!"],
+ ["Qual animal faz \"PIU PIU!\"?","🐦",["🐦 Pássaro","🦆 Pato","🐔 Galinha"],"🐦 Pássaro","Acertou! O passarinho faz PIU PIU!"],
+ ["Qual animal faz \"ZUM ZUM!\"?","🐝",["🐝 Abelha","🦋 Borboleta","🦗 Grilo"],"🐝 Abelha","Isso! A abelha faz ZUM ZUM!"],
+ ["Qual animal faz \"CRI CRI!\"?","🦗",["🦗 Grilo","🐝 Abelha","🐸 Sapo"],"🦗 Grilo","Muito bem! O grilo faz CRI CRI!"],
+ ["Qual animal faz \"UHU UHU!\"?","🦉",["🦉 Coruja","🐦 Pássaro","🦜 Papagaio"],"🦉 Coruja","Acertou! A coruja faz UHU UHU!"],
+ ["Qual animal faz \"AÚÚÚ!\"?","🐺",["🐺 Lobo","🦁 Leão","🐶 Cachorro"],"🐺 Lobo","Isso! O lobo uiva AÚÚÚ!"],
+ ["Qual animal faz \"GLU GLU!\"?","🦃",["🦃 Peru","🐔 Galinha","🦆 Pato"],"🦃 Peru","Acertou! O peru faz GLU GLU!"],
+ ["Qual animal pode imitar palavras e sons?","🦜",["🦜 Papagaio","🐶 Cachorro","🐮 Vaca"],"🦜 Papagaio","Muito bem! O papagaio pode imitar sons."],
+ ["Qual animal tem uma tromba comprida?","🐘",["🐘 Elefante","🦒 Girafa","🦁 Leão"],"🐘 Elefante","Isso! O elefante tem uma tromba comprida."],
+ ["Qual animal tem pescoço bem comprido?","🦒",["🦒 Girafa","🐘 Elefante","🐴 Cavalo"],"🦒 Girafa","Acertou! A girafa tem pescoço comprido."],
+ ["Qual animal tem casco?","🐢",["🐢 Tartaruga","🐰 Coelho","🐦 Pássaro"],"🐢 Tartaruga","Muito bem! A tartaruga tem casco."],
+ ["Qual animal vive na água e tem nadadeiras?","🐟",["🐟 Peixe","🐶 Cachorro","🐱 Gato"],"🐟 Peixe","Isso! O peixe vive na água e tem nadadeiras."],
+ ["Qual animal tem listras pretas e brancas?","🦓",["🦓 Zebra","🐴 Cavalo","🦒 Girafa"],"🦓 Zebra","Acertou! A zebra tem listras pretas e brancas."],
+ ["Qual animal é conhecido por comer bambu?","🐼",["🐼 Panda","🐨 Coala","🐰 Coelho"],"🐼 Panda","Muito bem! O panda gosta de bambu."],
+ ["Qual animal tem oito braços?","🐙",["🐙 Polvo","🦀 Caranguejo","🐬 Golfinho"],"🐙 Polvo","Isso! O polvo tem oito braços."],
+ ["Qual animal anda de lado?","🦀",["🦀 Caranguejo","🐙 Polvo","🐢 Tartaruga"],"🦀 Caranguejo","Acertou! O caranguejo anda de lado."],
+ ["Qual animal é um mamífero que vive no mar?","🐋",["🐋 Baleia","🐟 Peixe","🦀 Caranguejo"],"🐋 Baleia","Muito bem! A baleia é um mamífero marinho."],
+ ["Qual animal é famoso por saltar e ter pernas fortes?","🐸",["🐸 Sapo","🐢 Tartaruga","🐌 Caracol"],"🐸 Sapo","Isso! O sapo pode dar grandes saltos."],
+ ["Qual animal tem orelhas compridas?","🐰",["🐰 Coelho","🐱 Gato","🐭 Rato"],"🐰 Coelho","Acertou! O coelho tem orelhas compridas."],
+ ["Qual animal produz mel?","🐝",["🐝 Abelha","🦋 Borboleta","🦗 Grilo"],"🐝 Abelha","Muito bem! A abelha produz mel."],
+ ["Qual animal passa por uma transformação e vira borboleta?","🐛",["🐛 Lagarta","🐰 Coelho","🐟 Peixe"],"🐛 Lagarta","Isso! A lagarta passa por uma transformação."],
+ ["Qual animal é conhecido por ter espinhos nas costas?","🦔",["🦔 Ouriço","🐢 Tartaruga","🦓 Zebra"],"🦔 Ouriço","Acertou! O ouriço tem espinhos."],
+ ["Qual animal vive bem em regiões frias e não voa?","🐧",["🐧 Pinguim","🦜 Papagaio","🦅 Águia"],"🐧 Pinguim","Muito bem! O pinguim vive em regiões frias."],
+ ["Qual animal é famoso por sua grande velocidade?","🐆",["🐆 Guepardo","🐢 Tartaruga","🐌 Caracol"],"🐆 Guepardo","Isso! O guepardo é muito veloz."],
+ ["Qual animal pode mudar de cor para se camuflar?","🦎",["🦎 Camaleão","🐮 Vaca","🐔 Galinha"],"🦎 Camaleão","Acertou! O camaleão pode mudar de cor."],
+ ["Qual animal tem uma bolsa para carregar o filhote?","🦘",["🦘 Canguru","🐘 Elefante","🦒 Girafa"],"🦘 Canguru","Muito bem! A mamãe canguru tem uma bolsa."],
+ ["Qual animal é conhecido por construir represas?","🦫",["🦫 Castor","🦦 Lontra","🐻 Urso"],"🦫 Castor","Isso! O castor constrói represas."],
+ ["Qual animal dorme de cabeça para baixo?","🦇",["🦇 Morcego","🐦 Pássaro","🦉 Coruja"],"🦇 Morcego","Acertou! O morcego pode descansar de cabeça para baixo."],
+ ["Qual animal tem uma juba?","🦁",["🦁 Leão","🐯 Tigre","🐻 Urso"],"🦁 Leão","Muito bem! O leão tem uma juba."],
+ ["Qual animal tem uma concha e se move bem devagar?","🐌",["🐌 Caracol","🐇 Coelho","🐿️ Esquilo"],"🐌 Caracol","Isso! O caracol tem uma concha e anda devagar."]
+].map(([prompt,emoji,options,answer,success])=>[prompt,emoji,options,answer,success] as [string,string,string[],string,string]);
+
 const science=[
  ["vermelha","🍎 Maçã","🍌 Banana","🥦 Brócolis"],["amarela","🍌 Banana","🍇 Uva","🥦 Brócolis"],["verde","🥦 Brócolis","🍎 Maçã","🍌 Banana"],["azul","🌊 Água do mar","🍎 Maçã","🍌 Banana"],
  ["três lados","🔺 Triângulo","⚪ Círculo","⬜ Quadrado"],["quatro lados","⬜ Quadrado","⚪ Círculo","🔺 Triângulo"],["redonda","⚪ Círculo","🔺 Triângulo","⬜ Quadrado"],["tem seis lados","⬡ Hexágono","⚪ Círculo","🔺 Triângulo"],
@@ -190,7 +220,7 @@ export const bibleBookNames=[
 export const challenges:Record<string,Challenge[]> = {
  numeros:makeSeeds(numbersSeeds),
  letras:makeSeeds(lettersSeeds),
- memoria:makeSeeds(memorySeeds),
+ memoria:animalChallenges,
  cores:makeSeeds(scienceSeeds),
  valores:makeSeeds(valuesSeeds),
  biblia:makeSeeds([...bibleSeeds,...bibleBookSeeds])
