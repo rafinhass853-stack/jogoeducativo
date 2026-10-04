@@ -36,7 +36,7 @@ const lettersSeeds=letterWords.map(([letter,word],i)=>{
  return [`Qual é a primeira letra de “${word}”?`,"🔤",[letter,others[0],others[1]],letter,`Muito bem! ${word} começa com ${letter}.`] as [string,string,string[],string,string];
 });
 
-const animalChallenges:Array<[string,string,string[],string,string]> = [
+const animalChallenges:Challenge[] = [
  ["Qual animal faz \"MIAU!\"?","🐱",["🐱 Gato","🐶 Cachorro","🐮 Vaca"],"🐱 Gato","Acertou! O gato faz MIAU!"],
  ["Qual animal faz \"AU AU!\"?","🐶",["🐶 Cachorro","🐱 Gato","🐔 Galinha"],"🐶 Cachorro","Isso! O cachorro faz AU AU!"],
  ["Qual animal faz \"MUUU!\"?","🐮",["🐮 Vaca","🐑 Ovelha","🐷 Porco"],"🐮 Vaca","Muito bem! A vaca faz MUUU!"],
@@ -76,7 +76,7 @@ const animalChallenges:Array<[string,string,string[],string,string]> = [
  ["Qual animal dorme de cabeça para baixo?","🦇",["🦇 Morcego","🐦 Pássaro","🦉 Coruja"],"🦇 Morcego","Acertou! O morcego pode descansar de cabeça para baixo."],
  ["Qual animal tem uma juba?","🦁",["🦁 Leão","🐯 Tigre","🐻 Urso"],"🦁 Leão","Muito bem! O leão tem uma juba."],
  ["Qual animal tem uma concha e se move bem devagar?","🐌",["🐌 Caracol","🐇 Coelho","🐿️ Esquilo"],"🐌 Caracol","Isso! O caracol tem uma concha e anda devagar."]
-].map(([prompt,emoji,options,answer,success])=>[prompt,emoji,options,answer,success] as [string,string,string[],string,string]);
+].map(([prompt,emoji,options,answer,success])=>({prompt,emoji,options,answer,success}));
 
 const science=[
  ["vermelha","🍎 Maçã","🍌 Banana","🥦 Brócolis"],["amarela","🍌 Banana","🍇 Uva","🥦 Brócolis"],["verde","🥦 Brócolis","🍎 Maçã","🍌 Banana"],["azul","🌊 Água do mar","🍎 Maçã","🍌 Banana"],
