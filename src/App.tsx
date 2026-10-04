@@ -19,7 +19,7 @@ export default function App(){
  const [bibleStageIndex,setBibleStageIndex]=useState(0);
  useEffect(()=>{localStorage.setItem(PROFILE_KEY,JSON.stringify(profile))},[profile]);
  const game=games.find(g=>g.id===activeGame);
- if(game)return <AdventureGame game={game} onBack={()=>setActiveGame(null)} onComplete={(stars,xp)=>setProfile(p=>{const totalXp=p.xp+xp;return {...p,stars:p.stars+stars,xp:totalXp,level:levelFromXp(totalXp),completedGames:p.completedGames.includes(game.id)?p.completedGames:[...p.completedGames,game.id]}})}/>;
+ if(game)return <AdventureGame game={game} challengeList={game.id==="biblia"?bibleQuestions:undefined} onBack={()=>setActiveGame(null)} onComplete={(stars,xp)=>setProfile(p=>{const totalXp=p.xp+xp;return {...p,stars:p.stars+stars,xp:totalXp,level:levelFromXp(totalXp),completedGames:p.completedGames.includes(game.id)?p.completedGames:[...p.completedGames,game.id]}})}/>;
  const nextLevel=xpForNextLevel(profile.level),progress=profile.xp%100,avatar=avatars.find(a=>a.id===profile.avatar)||avatars[0];
  function saveProfile(name:string,age:number,avatarId:AvatarId){setProfile(p=>({...p,name:name.trim()||defaultProfile.name,age,avatar:avatarId}));setEditing(false)}
  if(showBibleMap)return <main className="app-shell"><button className="back-button" onClick={()=>setShowBibleMap(false)}>← Voltar aos jogos</button><BibleMap unlocked={bibleUnlocked} onPlay={(questions,stage)=>{setBibleQuestions(questions);setBibleStageIndex(stage);setShowBibleMap(false);setActiveGame("biblia")}}/></main>;
