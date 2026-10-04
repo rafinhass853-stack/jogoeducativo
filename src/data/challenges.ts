@@ -8,7 +8,7 @@ const forms=[
  (p:string)=>`Você consegue? ${p}`
 ];
 
-function makeSeeds(seeds:Array<[string,string,string[],string,string]>):Challenge[]{
+function makeSeeds(seeds:ReadonlyArray<readonly [string,string,string[],string,string]>):Challenge[]{
  return seeds.flatMap(([prompt,emoji,options,answer,success])=>forms.map((f,i)=>({
   prompt:i?f(prompt):prompt,emoji,options,answer,success
  })));
@@ -20,19 +20,19 @@ const numbersSeeds:Array<[string,string,string[],string,string]>=Array.from({len
 });
 numbersSeeds.push(...Array.from({length:40},(_,i)=>{
  const a=(i%10)+5,b=(Math.floor(i/10)%5)+1,c=a-b;
- return [`Quanto é ${a} - ${b}?`,"➖",[String(c-1),String(c),String(c+1)],String(c),`Isso! ${a} - ${b} = ${c}.`];
+ return [`Quanto é ${a} - ${b}?`,"➖",[String(c-1),String(c),String(c+1)],String(c),`Isso! ${a} - ${b} = ${c}.`] as [string,string,string[],string,string];
 }));
 numbersSeeds.push(...Array.from({length:40},(_,i)=>{
  const a=(i%8)+2,b=(Math.floor(i/8)%4)+2,c=a*b;
- return [`Qual é o resultado de ${a} × ${b}?`,"✖️",[String(c-2),String(c),String(c+2)],String(c),`Perfeito! ${a} × ${b} = ${c}.`];
+ return [`Qual é o resultado de ${a} × ${b}?`,"✖️",[String(c-2),String(c),String(c+2)],String(c),`Perfeito! ${a} × ${b} = ${c}.`] as [string,string,string[],string,string];
 }));
 numbersSeeds.push(...Array.from({length:40},(_,i)=>{
  const a=(i%9)+1,b=(Math.floor(i/9)%5)+1,c=a+b;
- return [`Você tem ${a} maçãs e ganha mais ${b}. Quantas ficam?`,"🍎",[String(c-1),String(c),String(c+2)],String(c),`Excelente! Agora são ${c} maçãs.`];
+ return [`Você tem ${a} maçãs e ganha mais ${b}. Quantas ficam?`,"🍎",[String(c-1),String(c),String(c+2)],String(c),`Excelente! Agora são ${c} maçãs.`] as [string,string,string[],string,string];
 }));
 numbersSeeds.push(...Array.from({length:40},(_,i)=>{
  const a=(i%10)+1,b=(Math.floor(i/10)%6)+1,c=Math.max(a,b);
- return [`Qual número é maior: ${a} ou ${b}?`,"🔎",[String(Math.min(a,b)),String(c),String(c+1)],String(c),`Isso! ${c} é o maior.`];
+ return [`Qual número é maior: ${a} ou ${b}?`,"🔎",[String(Math.min(a,b)),String(c),String(c+1)],String(c),`Isso! ${c} é o maior.`] as [string,string,string[],string,string];
 }));
 
 const letterWords=[
@@ -132,16 +132,6 @@ const deuterocanonicalBooks:Array<[string,string,string[],string,string]>=([
  ["2 Macabeus","📖",["fidelidade, coragem e esperança na ressurreição","a criação","a vida de Noé"],"fidelidade, coragem e esperança na ressurreição","2 Macabeus destaca fidelidade, coragem e esperança."]
 ] as Array<[string,string,string[],string,string]>).map(([book,e,options,answer,success])=>[`Qual é um dos principais temas do livro de ${book}?`,e,options,answer,success]);
 
-const bibleBookSeeds=[...bibleBooks,...deuterocanonicalBooks];
-
-export const challenges:Record<string,Challenge[]> = {
- numeros:makeSeeds(numbersSeeds),
- letras:makeSeeds(lettersSeeds),
- memoria:makeSeeds(memorySeeds),
- cores:makeSeeds(scienceSeeds),
- valores:makeSeeds(valuesSeeds),
- biblia:makeSeeds([...bibleSeeds,...bibleBookSeeds])
-}
 const bibleBooks:Array<[string,string,string[],string,string]>=([
  ["Gênesis","📖",["criação, famílias e origens","astronomia moderna","receitas"],"criação, famílias e origens","Gênesis apresenta relatos sobre origens, patriarcas e a formação do povo."],
  ["Êxodo","📖",["libertação do Egito e a aliança","viagens de Paulo","a vida de Jesus"],"libertação do Egito e a aliança","Êxodo conta a libertação do Egito e momentos importantes da aliança."],
