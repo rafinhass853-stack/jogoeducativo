@@ -1,9 +1,10 @@
 import {useState} from "react";
 import type {Game} from "../types";
 import {challenges} from "../data/challenges";
+import type {Challenge} from "../data/challenges";
 
-export function AdventureGame({game,onBack,onComplete}:{game:Game;onBack:()=>void;onComplete:(stars:number,xp:number)=>void}){
- const list=challenges[game.id]||[];
+export function AdventureGame({game,onBack,onComplete,challengeList}:{game:Game;onBack:()=>void;onComplete:(stars:number,xp:number)=>void;challengeList?:Challenge[]}){
+ const list=challengeList ?? challenges[game.id] ?? [];
  const [index,setIndex]=useState(0);
  const [earned,setEarned]=useState(0);
  const [message,setMessage]=useState("Escolha a resposta correta!");
