@@ -1,0 +1,1 @@
+export type Subject="portugues"|"matematica"|"ciencias"|"logica"|"valores"|"biblia"; export interface Game{id:string;title:string;icon:string;subject:Subject;description:string;ageMin:number;ageMax:number;color:string;}
