@@ -122,16 +122,6 @@ const bible=[
 ];
 const bibleSeeds=bible.map(([p,e,a,b,c])=>[p,e,[a,b,c],a,`Muito bem! Podemos aprender sobre isso na Bíblia: ${a}.`] as [string,string,string[],string,string]);
 
-const deuterocanonicalBooks:Array<[string,string,string[],string,string]>=([
- ["Tobias","📖",["fé, família e cuidado com os necessitados","a construção do templo","as viagens de Paulo"],"fé, família e cuidado com os necessitados","Tobias destaca fé, família e cuidado com quem precisa."],
- ["Judite","📖",["coragem e confiança em Deus","a criação","a vida de Pedro"],"coragem e confiança em Deus","Judite apresenta uma personagem marcada por coragem e confiança."],
- ["Sabedoria","📖",["sabedoria, justiça e busca de Deus","a arca de Noé","o ministério de João Batista"],"sabedoria, justiça e busca de Deus","Sabedoria reflete sobre justiça e a busca da sabedoria."],
- ["Eclesiástico","📖",["sabedoria prática, família e convivência","a queda de Jericó","as viagens de Paulo"],"sabedoria prática, família e convivência","Eclesiástico reúne ensinamentos práticos sobre sabedoria e convivência."],
- ["Baruc","📖",["arrependimento, esperança e sabedoria","a construção da arca","o reinado de Salomão"],"arrependimento, esperança e sabedoria","Baruc apresenta orações, arrependimento e esperança."],
- ["1 Macabeus","📖",["resistência e fidelidade do povo judeu","o nascimento de Jesus","as cartas de Paulo"],"resistência e fidelidade do povo judeu","1 Macabeus narra acontecimentos ligados à resistência judaica."],
- ["2 Macabeus","📖",["fidelidade, coragem e esperança na ressurreição","a criação","a vida de Noé"],"fidelidade, coragem e esperança na ressurreição","2 Macabeus destaca fidelidade, coragem e esperança."]
-] as Array<[string,string,string[],string,string]>).map(([book,e,options,answer,success])=>[`Qual é um dos principais temas do livro de ${book}?`,e,options,answer,success]);
-
 const bibleBooks:Array<[string,string,string[],string,string]>=([
  ["Gênesis","📖",["criação, famílias e origens","astronomia moderna","receitas"],"criação, famílias e origens","Gênesis apresenta relatos sobre origens, patriarcas e a formação do povo."],
  ["Êxodo","📖",["libertação do Egito e a aliança","viagens de Paulo","a vida de Jesus"],"libertação do Egito e a aliança","Êxodo conta a libertação do Egito e momentos importantes da aliança."],
@@ -201,6 +191,9 @@ const bibleBooks:Array<[string,string,string[],string,string]>=([
  ["Apocalipse","📖",["esperança, perseverança e vitória final de Deus","a construção da arca","o reinado de Salomão"],"esperança, perseverança e vitória final de Deus","Apocalipse usa linguagem simbólica para transmitir esperança e perseverança."]
 ] as Array<[string,string,string[],string,string]>).map(([book,e,options,answer,success])=>[`Qual é um dos principais temas do livro de ${book}?`,e,options,answer,success]);
 
+export const bibleBookNames=[
+"Gênesis","Êxodo","Levítico","Números","Deuteronômio","Josué","Juízes","Rute","1 Samuel","2 Samuel","1 Reis","2 Reis","1 Crônicas","2 Crônicas","Esdras","Neemias","Ester","Jó","Salmos","Provérbios","Eclesiastes","Cânticos","Isaías","Jeremias","Lamentações","Ezequiel","Daniel","Oseias","Joel","Amós","Obadias","Jonas","Miqueias","Naum","Habacuque","Sofonias","Ageu","Zacarias","Malaquias","Mateus","Marcos","Lucas","João","Atos","Romanos","1 Coríntios","2 Coríntios","Gálatas","Efésios","Filipenses","Colossenses","1 Tessalonicenses","2 Tessalonicenses","1 Timóteo","2 Timóteo","Tito","Filemom","Hebreus","Tiago","1 Pedro","2 Pedro","1 João","2 João","3 João","Judas","Apocalipse"
+] as const;
 export const challenges:Record<string,Challenge[]> = {
  numeros:makeSeeds(numbersSeeds),
  letras:makeSeeds(lettersSeeds),
