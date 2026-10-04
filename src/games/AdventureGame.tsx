@@ -2,6 +2,7 @@ import {useState} from "react";
 import type {Game} from "../types";
 import {challenges} from "../data/challenges";
 import type {Challenge} from "../data/challenges";
+import {playAnimalSound,playSuccessSound} from "../utils/sounds";
 
 export function AdventureGame({game,onBack,onComplete,challengeList}:{game:Game;onBack:()=>void;onComplete:(stars:number,xp:number)=>void;challengeList?:Challenge[]}){
  const list=challengeList ?? challenges[game.id] ?? [];
@@ -9,13 +10,14 @@ export function AdventureGame({game,onBack,onComplete,challengeList}:{game:Game;
  const [earned,setEarned]=useState(0);
  const [message,setMessage]=useState("Escolha a resposta correta!");
  const [finished,setFinished]=useState(false);
+ const isAnimalGame=game.id==="memoria";
  const q=list[index];
 
  if(!q)return <section className="game-screen"><button className="back-button" onClick={onBack}>← Voltar</button><div className="challenge"><p className="challenge-title">Preparando esta aventura...</p></div></section>;
 
  function answer(value:string){
   if(value!==q.answer){setMessage("Quase! Tente outra vez. 😊");return;}
-  const total=earned+1; setEarned(total); setMessage("🎉 "+q.success);
+  const total=earned+1; setEarned(total); setMessage("🎉 "+q.success); playSuccessSound(); if(isAnimalGame) playAnimalSound(value);
   setTimeout(()=>{
    if(index+1>=list.length){setFinished(true);onComplete(total,total*25)}
    else{setIndex(index+1);setMessage("Escolha a resposta correta!")}
@@ -29,7 +31,7 @@ export function AdventureGame({game,onBack,onComplete,challengeList}:{game:Game;
   <div className="game-header"><span>{game.icon} {game.title}</span><strong>⭐ {earned}</strong></div>
   <div className="challenge">
    <p className="challenge-title">{q.prompt}</p>
-   <div className="objects" aria-hidden="true">{q.emoji}</div>
+   <div className="objects" aria-hidden="true">{q.emoji}</div>{isAnimalGame&&<button className="sound-button" onClick={()=>playAnimalSound(q.answer)} aria-label="Ouvir o som do animal">🔊 Ouvir som</button>}
    <p className="message" aria-live="polite">{message}</p>
    <div className="answer-grid">{q.options.map((o,i)=><button key={o+i} onClick={()=>answer(o)}>{o}</button>)}</div>
    <p className="game-progress">Desafio {index+1} de {list.length} · {Math.round(((index+1)/list.length)*100)}%</p>
