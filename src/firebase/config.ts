@@ -1,0 +1,4 @@
+import { initializeApp } from "firebase/app"; import { getAnalytics, isSupported } from "firebase/analytics"; import { getFirestore } from "firebase/firestore"; import { getAuth } from "firebase/auth"; import { getStorage } from "firebase/storage";
+const firebaseConfig={apiKey:"AIzaSyACvKVdDLFOovY6YcAIMjOQiZAdndh1bsE",authDomain:"jogoeducativo-6692a.firebaseapp.com",projectId:"jogoeducativo-6692a",storageBucket:"jogoeducativo-6692a.firebasestorage.app",messagingSenderId:"310267417672",appId:"1:310267417672:web:ef35c6271e4e3c6ffb747d",measurementId:"G-RGREPTCHDZ"};
+export const app=initializeApp(firebaseConfig); export const auth=getAuth(app); export const db=getFirestore(app); export const storage=getStorage(app);
+if(typeof window!=="undefined"){void isSupported().then(supported=>{if(supported)getAnalytics(app);});}
